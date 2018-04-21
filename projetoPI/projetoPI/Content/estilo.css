@@ -1,0 +1,38 @@
+﻿body {
+}
+
+.corpo-do-site{
+    
+}
+
+.cabecalho {
+    color: azure;
+    background-color: dimgray;
+}
+
+.rodape {
+    color: azure;
+    background-color: dimgray;
+    text-align: center;
+}
+
+#navbarNav {
+    color: azure;
+}
+
+.nav-item {
+    margin: 5px;
+}
+
+a{
+    margin: 5px;
+    color:azure;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.botao{
+    color:azure;
+}
