@@ -1,0 +1,24 @@
+﻿@model IEnumerable<projetoPI.Models.processo>
+@{
+    ViewBag.Title = "Index";
+    List<projetoPI.Models.cliente> cli = new List<projetoPI.Models.cliente>();
+    List<projetoPI.Models.contrario> con = new List<projetoPI.Models.contrario>();
+}
+
+<h2>Página Colaborador</h2>
+
+@Html.Partial("_ProcessosColaborador", Model)
+
+
+@if (ViewBag.Cli!=null)
+{
+    cli = ViewBag.Cli;
+}
+@Html.Partial("_Cliente", cli)
+
+
+@if (ViewBag.Con != null)
+{
+    con = ViewBag.Con;
+}
+@Html.Partial("_Contrario", con)

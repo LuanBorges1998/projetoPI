@@ -1,0 +1,133 @@
+﻿@model IEnumerable<projetoPI.Models.usuario>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Página TI</h2>
+
+<p>
+    <a id="listaUsuario" class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Listar Usuários</a>
+    <button id="criarUsuario" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Criar novo usuário</button>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button>
+</p>
+<div class="row">
+    <div id="num1" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="collapse multi-collapse" id="multiCollapseExample1">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Usuários</h5>
+
+                    <p>
+                        Pesquisar por Nome
+                        @using (Ajax.BeginForm("Index", "TI", new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "divListaUsuarios" }))
+                        {
+                            @Html.TextBox("Pesquisa")
+                            <input type="submit" value="Pesquisar" />
+                        }
+                    </p>
+
+                    @*<table class="table">
+                        <tr>
+                            <th>
+                                Nome
+                            </th>
+                            <th>
+                                Login
+                            </th>
+                            <th>
+                                Senha
+                            </th>
+                            <th>
+                                Tipo
+                            </th>
+                            <th>
+                                Id_socio
+                            </th>
+                            <th></th>
+                        </tr>*@
+
+                    @Html.Partial("_Usuarios", Model)
+
+                    @*@if (ViewBag.Modelo != null)
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.nome
+                                        </td>
+                                        <td>
+                                            @item.login
+                                        </td>
+                                        <td>
+                                            @item.senha
+                                        </td>
+                                        <td>
+                                            @item.tipo
+                                        </td>
+                                        <td>
+                                            @item.id_socio
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.id }, new { @class = "links" })|
+                                            @Html.ActionLink("Excluir", "Excluir", new { id = item.id }, new { @class = "links" })
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </table>*@
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="num2" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="collapse multi-collapse" id="multiCollapseExample2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Novo usuário</h5>
+
+                    <form method="post">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Nome</label>
+                            <input type="text" name="no" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Login</label>
+                            <input type="text" name="lo" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Senha</label>
+                            <input type="text" name="se" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Tipo</label>
+                            @Html.DropDownList("tipos", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+
+                        @*<div class="form-group">
+                            <label class="control-label col-md-2">Id do sócio</label>
+                            <input type="text" name="id" class="form-control" />
+                        </div>*@
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Id do sócio</label>
+                            @*<select id="id_socio" class="form-control" name="id_socio"></select>*@
+                            @Html.DropDownList("id_socio", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Criar" class="btn btn-default" />
+                        </div>
+                    </form>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

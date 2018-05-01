@@ -1,0 +1,54 @@
+﻿@model IEnumerable<projetoPI.Models.usuario>
+
+<div id="divListaUsuarios">
+
+    <table class="table">
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                Login
+            </th>
+            <th>
+                Senha
+            </th>
+            <th>
+                Tipo
+            </th>
+            <th>
+                Id_socio
+            </th>
+            <th></th>
+        </tr>
+
+        @*@if (ViewBag.Modelo != null)
+            {*@
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.nome
+                </td>
+                <td>
+                    @item.login
+                </td>
+                <td>
+                    @item.senha
+                </td>
+                <td>
+                    @item.tipo
+                </td>
+                <td>
+                    @item.id_socio
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.id }, new { @class = "links" })|
+                    @Html.ActionLink("Excluir", "Excluir", new { id = item.id }, new { @class = "links" })
+                </td>
+            </tr>
+        }
+        @*}*@
+    </table>
+
+</div>

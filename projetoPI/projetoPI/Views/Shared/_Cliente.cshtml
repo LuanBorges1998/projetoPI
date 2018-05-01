@@ -1,0 +1,26 @@
+﻿@model IEnumerable<projetoPI.Models.cliente>
+
+<p>
+    @Html.ActionLink("Adicionar Cliente", "AdicionaCliente", "SocioColaborador",null, new { @class = "links" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nome)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nome)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "EditCliente", new { id=item.id }, new { @class = "links" }) |
+            @Html.ActionLink("Excluir", "DeleteCliente", new { id=item.id }, new { @class = "links" })
+        </td>
+    </tr>
+}
+
+</table>

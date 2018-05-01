@@ -73,3 +73,13 @@ C:\Users\Luan\Documents\GIT\projetoPI\projetoPI\projetoPI\obj\Debug\projetoPI.cs
 C:\Users\Luan\Documents\GIT\projetoPI\projetoPI\projetoPI\obj\Debug\projetoPI.csproj.CoreCompileInputs.cache
 C:\Users\Luan\Documents\GIT\projetoPI\projetoPI\projetoPI\obj\Debug\projetoPI.dll
 C:\Users\Luan\Documents\GIT\projetoPI\projetoPI\projetoPI\obj\Debug\projetoPI.pdb
+C:\Users\Luan\Documents\GIT\projetoPI\projetoPI\projetoPI\bin\EntityFramework.dll
+C:\Users\Luan\Documents\GIT\projetoPI\projetoPI\projetoPI\bin\EntityFramework.SqlServer.dll
+C:\Users\Luan\Documents\GIT\projetoPI\projetoPI\projetoPI\bin\EntityFramework6.Npgsql.dll
+C:\Users\Luan\Documents\GIT\projetoPI\projetoPI\projetoPI\bin\Npgsql.dll
+C:\Users\Luan\Documents\GIT\projetoPI\projetoPI\projetoPI\bin\System.Threading.Tasks.Extensions.dll
+C:\Users\Luan\Documents\GIT\projetoPI\projetoPI\projetoPI\bin\EntityFramework.xml
+C:\Users\Luan\Documents\GIT\projetoPI\projetoPI\projetoPI\bin\EntityFramework.SqlServer.xml
+C:\Users\Luan\Documents\GIT\projetoPI\projetoPI\projetoPI\bin\EntityFramework6.Npgsql.xml
+C:\Users\Luan\Documents\GIT\projetoPI\projetoPI\projetoPI\bin\Npgsql.xml
+C:\Users\Luan\Documents\GIT\projetoPI\projetoPI\projetoPI\bin\System.Threading.Tasks.Extensions.xml

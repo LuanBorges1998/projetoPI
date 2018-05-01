@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="projetoPIModelStoreContainer" CdmEntityContainer="DataModel">
+    <EntitySetMapping Name="agendamento">
+      <EntityTypeMapping TypeName="projetoPI.Model.agendamento">
+        <MappingFragment StoreEntitySet="agendamento">
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="descricao" ColumnName="descricao" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="data_agendamento" ColumnName="data_agendamento" />
+          <ScalarProperty Name="horario" ColumnName="horario" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cliente">
+      <EntityTypeMapping TypeName="projetoPI.Model.cliente">
+        <MappingFragment StoreEntitySet="cliente">
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="contrario">
+      <EntityTypeMapping TypeName="projetoPI.Model.contrario">
+        <MappingFragment StoreEntitySet="contrario">
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="documento">
+      <EntityTypeMapping TypeName="projetoPI.Model.documento">
+        <MappingFragment StoreEntitySet="documento">
+          <ScalarProperty Name="diretorio" ColumnName="diretorio" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="etapa">
+      <EntityTypeMapping TypeName="projetoPI.Model.etapa">
+        <MappingFragment StoreEntitySet="etapa">
+          <ScalarProperty Name="valor_pago" ColumnName="valor_pago" />
+          <ScalarProperty Name="id_processo" ColumnName="id_processo" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="parceiro">
+      <EntityTypeMapping TypeName="projetoPI.Model.parceiro">
+        <MappingFragment StoreEntitySet="parceiro">
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="processo">
+      <EntityTypeMapping TypeName="projetoPI.Model.processo">
+        <MappingFragment StoreEntitySet="processo">
+          <ScalarProperty Name="id_contrario" ColumnName="id_contrario" />
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+          <ScalarProperty Name="descricao" ColumnName="descricao" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usuario">
+      <EntityTypeMapping TypeName="projetoPI.Model.usuario">
+        <MappingFragment StoreEntitySet="usuario">
+          <ScalarProperty Name="id_socio" ColumnName="id_socio" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="senha" ColumnName="senha" />
+          <ScalarProperty Name="login" ColumnName="login" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="cliente_documento" TypeName="projetoPI.Model.cliente_documento" StoreEntitySet="cliente_documento">
+      <EndProperty Name="documento">
+        <ScalarProperty Name="id" ColumnName="id_documento" />
+      </EndProperty>
+      <EndProperty Name="cliente">
+        <ScalarProperty Name="id" ColumnName="id_cliente" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="contrario_documento" TypeName="projetoPI.Model.contrario_documento" StoreEntitySet="contrario_documento">
+      <EndProperty Name="documento">
+        <ScalarProperty Name="id" ColumnName="id_documento" />
+      </EndProperty>
+      <EndProperty Name="contrario">
+        <ScalarProperty Name="id" ColumnName="id_contrario" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="parceiro_documento" TypeName="projetoPI.Model.parceiro_documento" StoreEntitySet="parceiro_documento">
+      <EndProperty Name="parceiro">
+        <ScalarProperty Name="id" ColumnName="id_parceiro" />
+      </EndProperty>
+      <EndProperty Name="documento">
+        <ScalarProperty Name="id" ColumnName="id_documento" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

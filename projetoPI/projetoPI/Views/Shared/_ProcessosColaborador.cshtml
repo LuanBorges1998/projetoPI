@@ -1,0 +1,44 @@
+﻿@model IEnumerable<projetoPI.Models.processo>
+
+<p>
+    @Html.ActionLink("Adicionar processo", "Create",null, new { @class = "links"})
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Descrição")
+        </th>
+        <th>
+            @Html.DisplayName("Cliente")
+        </th>
+        <th>
+            @Html.DisplayName("Contrario")
+        </th>
+        <th>
+            @Html.DisplayName("Advogado")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cliente.nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.contrario.nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuario.nome)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.id }, new { @class = "links" }) |
+            @Html.ActionLink("Excluir", "Delete", new { id=item.id }, new { @class = "links" })
+        </td>
+    </tr>
+}
+
+</table>

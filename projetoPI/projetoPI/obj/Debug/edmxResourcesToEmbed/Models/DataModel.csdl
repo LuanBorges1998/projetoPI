@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="projetoPI.Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DataModel" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="agendamento" EntityType="projetoPI.Model.agendamento" />
+    <EntitySet Name="cliente" EntityType="projetoPI.Model.cliente" />
+    <EntitySet Name="contrario" EntityType="projetoPI.Model.contrario" />
+    <EntitySet Name="documento" EntityType="projetoPI.Model.documento" />
+    <EntitySet Name="etapa" EntityType="projetoPI.Model.etapa" />
+    <EntitySet Name="parceiro" EntityType="projetoPI.Model.parceiro" />
+    <EntitySet Name="processo" EntityType="projetoPI.Model.processo" />
+    <EntitySet Name="usuario" EntityType="projetoPI.Model.usuario" />
+    <AssociationSet Name="agendamento_id_usuario_fkey" Association="projetoPI.Model.agendamento_id_usuario_fkey">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="agendamento" EntitySet="agendamento" />
+    </AssociationSet>
+    <AssociationSet Name="processo_id_cliente_fkey" Association="projetoPI.Model.processo_id_cliente_fkey">
+      <End Role="cliente" EntitySet="cliente" />
+      <End Role="processo" EntitySet="processo" />
+    </AssociationSet>
+    <AssociationSet Name="processo_id_contrario_fkey" Association="projetoPI.Model.processo_id_contrario_fkey">
+      <End Role="contrario" EntitySet="contrario" />
+      <End Role="processo" EntitySet="processo" />
+    </AssociationSet>
+    <AssociationSet Name="etapa_id_processo_fkey" Association="projetoPI.Model.etapa_id_processo_fkey">
+      <End Role="processo" EntitySet="processo" />
+      <End Role="etapa" EntitySet="etapa" />
+    </AssociationSet>
+    <AssociationSet Name="processo_id_usuario_fkey" Association="projetoPI.Model.processo_id_usuario_fkey">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="processo" EntitySet="processo" />
+    </AssociationSet>
+    <AssociationSet Name="usuario_id_socio_fkey" Association="projetoPI.Model.usuario_id_socio_fkey">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="usuario1" EntitySet="usuario" />
+    </AssociationSet>
+    <AssociationSet Name="cliente_documento" Association="projetoPI.Model.cliente_documento">
+      <End Role="cliente" EntitySet="cliente" />
+      <End Role="documento" EntitySet="documento" />
+    </AssociationSet>
+    <AssociationSet Name="contrario_documento" Association="projetoPI.Model.contrario_documento">
+      <End Role="contrario" EntitySet="contrario" />
+      <End Role="documento" EntitySet="documento" />
+    </AssociationSet>
+    <AssociationSet Name="parceiro_documento" Association="projetoPI.Model.parceiro_documento">
+      <End Role="documento" EntitySet="documento" />
+      <End Role="parceiro" EntitySet="parceiro" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="agendamento">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="horario" Type="Time" Precision="6" />
+    <Property Name="data_agendamento" Type="DateTime" Precision="0" />
+    <Property Name="nome" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+    <Property Name="descricao" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+    <Property Name="id_usuario" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="usuario" Relationship="projetoPI.Model.agendamento_id_usuario_fkey" FromRole="agendamento" ToRole="usuario" />
+  </EntityType>
+  <EntityType Name="cliente">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="processo" Relationship="projetoPI.Model.processo_id_cliente_fkey" FromRole="cliente" ToRole="processo" />
+    <NavigationProperty Name="documento" Relationship="projetoPI.Model.cliente_documento" FromRole="cliente" ToRole="documento" />
+  </EntityType>
+  <EntityType Name="contrario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="processo" Relationship="projetoPI.Model.processo_id_contrario_fkey" FromRole="contrario" ToRole="processo" />
+    <NavigationProperty Name="documento" Relationship="projetoPI.Model.contrario_documento" FromRole="contrario" ToRole="documento" />
+  </EntityType>
+  <EntityType Name="documento">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+    <Property Name="diretorio" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="cliente" Relationship="projetoPI.Model.cliente_documento" FromRole="documento" ToRole="cliente" />
+    <NavigationProperty Name="contrario" Relationship="projetoPI.Model.contrario_documento" FromRole="documento" ToRole="contrario" />
+    <NavigationProperty Name="parceiro" Relationship="projetoPI.Model.parceiro_documento" FromRole="documento" ToRole="parceiro" />
+  </EntityType>
+  <EntityType Name="etapa">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_processo" Type="Int32" Nullable="false" />
+    <Property Name="valor_pago" Type="Double" />
+    <NavigationProperty Name="processo" Relationship="projetoPI.Model.etapa_id_processo_fkey" FromRole="etapa" ToRole="processo" />
+  </EntityType>
+  <EntityType Name="parceiro">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="documento" Relationship="projetoPI.Model.parceiro_documento" FromRole="parceiro" ToRole="documento" />
+  </EntityType>
+  <EntityType Name="processo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descricao" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+    <Property Name="id_cliente" Type="Int32" Nullable="false" />
+    <Property Name="id_usuario" Type="Int32" Nullable="false" />
+    <Property Name="id_contrario" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="cliente" Relationship="projetoPI.Model.processo_id_cliente_fkey" FromRole="processo" ToRole="cliente" />
+    <NavigationProperty Name="contrario" Relationship="projetoPI.Model.processo_id_contrario_fkey" FromRole="processo" ToRole="contrario" />
+    <NavigationProperty Name="etapa" Relationship="projetoPI.Model.etapa_id_processo_fkey" FromRole="processo" ToRole="etapa" />
+    <NavigationProperty Name="usuario" Relationship="projetoPI.Model.processo_id_usuario_fkey" FromRole="processo" ToRole="usuario" />
+  </EntityType>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+    <Property Name="login" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+    <Property Name="senha" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+    <Property Name="tipo" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+    <Property Name="id_socio" Type="Int32" />
+    <NavigationProperty Name="agendamento" Relationship="projetoPI.Model.agendamento_id_usuario_fkey" FromRole="usuario" ToRole="agendamento" />
+    <NavigationProperty Name="processo" Relationship="projetoPI.Model.processo_id_usuario_fkey" FromRole="usuario" ToRole="processo" />
+    <NavigationProperty Name="usuario1" Relationship="projetoPI.Model.usuario_id_socio_fkey" FromRole="usuario" ToRole="usuario1" />
+    <NavigationProperty Name="usuario2" Relationship="projetoPI.Model.usuario_id_socio_fkey" FromRole="usuario1" ToRole="usuario" />
+  </EntityType>
+  <Association Name="agendamento_id_usuario_fkey">
+    <End Type="projetoPI.Model.usuario" Role="usuario" Multiplicity="1" />
+    <End Type="projetoPI.Model.agendamento" Role="agendamento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="agendamento">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="processo_id_cliente_fkey">
+    <End Type="projetoPI.Model.cliente" Role="cliente" Multiplicity="1" />
+    <End Type="projetoPI.Model.processo" Role="processo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cliente">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="processo">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="processo_id_contrario_fkey">
+    <End Type="projetoPI.Model.contrario" Role="contrario" Multiplicity="1" />
+    <End Type="projetoPI.Model.processo" Role="processo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="contrario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="processo">
+        <PropertyRef Name="id_contrario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="etapa_id_processo_fkey">
+    <End Type="projetoPI.Model.processo" Role="processo" Multiplicity="1" />
+    <End Type="projetoPI.Model.etapa" Role="etapa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="processo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="etapa">
+        <PropertyRef Name="id_processo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="processo_id_usuario_fkey">
+    <End Type="projetoPI.Model.usuario" Role="usuario" Multiplicity="1" />
+    <End Type="projetoPI.Model.processo" Role="processo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="processo">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="usuario_id_socio_fkey">
+    <End Type="projetoPI.Model.usuario" Role="usuario" Multiplicity="0..1" />
+    <End Type="projetoPI.Model.usuario" Role="usuario1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="usuario1">
+        <PropertyRef Name="id_socio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="cliente_documento">
+    <End Type="projetoPI.Model.cliente" Role="cliente" Multiplicity="*" />
+    <End Type="projetoPI.Model.documento" Role="documento" Multiplicity="*" />
+  </Association>
+  <Association Name="contrario_documento">
+    <End Type="projetoPI.Model.contrario" Role="contrario" Multiplicity="*" />
+    <End Type="projetoPI.Model.documento" Role="documento" Multiplicity="*" />
+  </Association>
+  <Association Name="parceiro_documento">
+    <End Type="projetoPI.Model.documento" Role="documento" Multiplicity="*" />
+    <End Type="projetoPI.Model.parceiro" Role="parceiro" Multiplicity="*" />
+  </Association>
+</Schema>

@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="projetoPI.Model.Store" Provider="Npgsql" ProviderManifestToken="9.5.12" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="agendamento">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="horario" Type="time" Precision="6" />
+    <Property Name="data_agendamento" Type="date" />
+    <Property Name="nome" Type="varchar" MaxLength="8000" />
+    <Property Name="descricao" Type="varchar" MaxLength="8000" />
+    <Property Name="id_usuario" Type="int4" Nullable="false" />
+  </EntityType>
+  <EntityType Name="cliente">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="8000" />
+  </EntityType>
+  <EntityType Name="cliente_documento">
+    <Key>
+      <PropertyRef Name="id_documento" />
+      <PropertyRef Name="id_cliente" />
+    </Key>
+    <Property Name="id_documento" Type="int4" Nullable="false" />
+    <Property Name="id_cliente" Type="int4" Nullable="false" />
+  </EntityType>
+  <EntityType Name="contrario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="8000" />
+  </EntityType>
+  <EntityType Name="contrario_documento">
+    <Key>
+      <PropertyRef Name="id_documento" />
+      <PropertyRef Name="id_contrario" />
+    </Key>
+    <Property Name="id_documento" Type="int4" Nullable="false" />
+    <Property Name="id_contrario" Type="int4" Nullable="false" />
+  </EntityType>
+  <EntityType Name="documento">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="8000" />
+    <Property Name="diretorio" Type="varchar" MaxLength="8000" />
+  </EntityType>
+  <EntityType Name="etapa">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_processo" Type="int4" Nullable="false" />
+    <Property Name="valor_pago" Type="float8" />
+  </EntityType>
+  <EntityType Name="parceiro">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="8000" />
+  </EntityType>
+  <EntityType Name="parceiro_documento">
+    <Key>
+      <PropertyRef Name="id_documento" />
+      <PropertyRef Name="id_parceiro" />
+    </Key>
+    <Property Name="id_documento" Type="int4" Nullable="false" />
+    <Property Name="id_parceiro" Type="int4" Nullable="false" />
+  </EntityType>
+  <EntityType Name="processo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descricao" Type="varchar" MaxLength="8000" />
+    <Property Name="id_cliente" Type="int4" Nullable="false" />
+    <Property Name="id_usuario" Type="int4" Nullable="false" />
+    <Property Name="id_contrario" Type="int4" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="8000" />
+    <Property Name="login" Type="varchar" MaxLength="8000" />
+    <Property Name="senha" Type="varchar" MaxLength="8000" />
+    <Property Name="tipo" Type="varchar" MaxLength="8000" />
+    <Property Name="id_socio" Type="int4" />
+  </EntityType>
+  <Association Name="agendamento_id_usuario_fkey">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+    <End Role="agendamento" Type="Self.agendamento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="agendamento">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="cliente_documento_id_cliente_fkey">
+    <End Role="cliente" Type="Self.cliente" Multiplicity="1" />
+    <End Role="cliente_documento" Type="Self.cliente_documento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cliente">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="cliente_documento">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="cliente_documento_id_documento_fkey">
+    <End Role="documento" Type="Self.documento" Multiplicity="1" />
+    <End Role="cliente_documento" Type="Self.cliente_documento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="documento">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="cliente_documento">
+        <PropertyRef Name="id_documento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="contrario_documento_id_contrario_fkey">
+    <End Role="contrario" Type="Self.contrario" Multiplicity="1" />
+    <End Role="contrario_documento" Type="Self.contrario_documento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="contrario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="contrario_documento">
+        <PropertyRef Name="id_contrario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="contrario_documento_id_documento_fkey">
+    <End Role="documento" Type="Self.documento" Multiplicity="1" />
+    <End Role="contrario_documento" Type="Self.contrario_documento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="documento">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="contrario_documento">
+        <PropertyRef Name="id_documento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="etapa_id_processo_fkey">
+    <End Role="processo" Type="Self.processo" Multiplicity="1" />
+    <End Role="etapa" Type="Self.etapa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="processo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="etapa">
+        <PropertyRef Name="id_processo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="parceiro_documento_id_documento_fkey">
+    <End Role="documento" Type="Self.documento" Multiplicity="1" />
+    <End Role="parceiro_documento" Type="Self.parceiro_documento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="documento">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="parceiro_documento">
+        <PropertyRef Name="id_documento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="parceiro_documento_id_parceiro_fkey">
+    <End Role="parceiro" Type="Self.parceiro" Multiplicity="1" />
+    <End Role="parceiro_documento" Type="Self.parceiro_documento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="parceiro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="parceiro_documento">
+        <PropertyRef Name="id_parceiro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="processo_id_cliente_fkey">
+    <End Role="cliente" Type="Self.cliente" Multiplicity="1" />
+    <End Role="processo" Type="Self.processo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cliente">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="processo">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="processo_id_contrario_fkey">
+    <End Role="contrario" Type="Self.contrario" Multiplicity="1" />
+    <End Role="processo" Type="Self.processo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="contrario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="processo">
+        <PropertyRef Name="id_contrario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="processo_id_usuario_fkey">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+    <End Role="processo" Type="Self.processo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="processo">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="usuario_id_socio_fkey">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+    <End Role="usuario1" Type="Self.usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="usuario1">
+        <PropertyRef Name="id_socio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="projetoPIModelStoreContainer">
+    <EntitySet Name="agendamento" EntityType="Self.agendamento" Schema="public" store:Type="Tables" />
+    <EntitySet Name="cliente" EntityType="Self.cliente" Schema="public" store:Type="Tables" />
+    <EntitySet Name="cliente_documento" EntityType="Self.cliente_documento" Schema="public" store:Type="Tables" />
+    <EntitySet Name="contrario" EntityType="Self.contrario" Schema="public" store:Type="Tables" />
+    <EntitySet Name="contrario_documento" EntityType="Self.contrario_documento" Schema="public" store:Type="Tables" />
+    <EntitySet Name="documento" EntityType="Self.documento" Schema="public" store:Type="Tables" />
+    <EntitySet Name="etapa" EntityType="Self.etapa" Schema="public" store:Type="Tables" />
+    <EntitySet Name="parceiro" EntityType="Self.parceiro" Schema="public" store:Type="Tables" />
+    <EntitySet Name="parceiro_documento" EntityType="Self.parceiro_documento" Schema="public" store:Type="Tables" />
+    <EntitySet Name="processo" EntityType="Self.processo" Schema="public" store:Type="Tables" />
+    <EntitySet Name="usuario" EntityType="Self.usuario" Schema="public" store:Type="Tables" />
+    <AssociationSet Name="agendamento_id_usuario_fkey" Association="Self.agendamento_id_usuario_fkey">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="agendamento" EntitySet="agendamento" />
+    </AssociationSet>
+    <AssociationSet Name="cliente_documento_id_cliente_fkey" Association="Self.cliente_documento_id_cliente_fkey">
+      <End Role="cliente" EntitySet="cliente" />
+      <End Role="cliente_documento" EntitySet="cliente_documento" />
+    </AssociationSet>
+    <AssociationSet Name="cliente_documento_id_documento_fkey" Association="Self.cliente_documento_id_documento_fkey">
+      <End Role="documento" EntitySet="documento" />
+      <End Role="cliente_documento" EntitySet="cliente_documento" />
+    </AssociationSet>
+    <AssociationSet Name="contrario_documento_id_contrario_fkey" Association="Self.contrario_documento_id_contrario_fkey">
+      <End Role="contrario" EntitySet="contrario" />
+      <End Role="contrario_documento" EntitySet="contrario_documento" />
+    </AssociationSet>
+    <AssociationSet Name="contrario_documento_id_documento_fkey" Association="Self.contrario_documento_id_documento_fkey">
+      <End Role="documento" EntitySet="documento" />
+      <End Role="contrario_documento" EntitySet="contrario_documento" />
+    </AssociationSet>
+    <AssociationSet Name="etapa_id_processo_fkey" Association="Self.etapa_id_processo_fkey">
+      <End Role="processo" EntitySet="processo" />
+      <End Role="etapa" EntitySet="etapa" />
+    </AssociationSet>
+    <AssociationSet Name="parceiro_documento_id_documento_fkey" Association="Self.parceiro_documento_id_documento_fkey">
+      <End Role="documento" EntitySet="documento" />
+      <End Role="parceiro_documento" EntitySet="parceiro_documento" />
+    </AssociationSet>
+    <AssociationSet Name="parceiro_documento_id_parceiro_fkey" Association="Self.parceiro_documento_id_parceiro_fkey">
+      <End Role="parceiro" EntitySet="parceiro" />
+      <End Role="parceiro_documento" EntitySet="parceiro_documento" />
+    </AssociationSet>
+    <AssociationSet Name="processo_id_cliente_fkey" Association="Self.processo_id_cliente_fkey">
+      <End Role="cliente" EntitySet="cliente" />
+      <End Role="processo" EntitySet="processo" />
+    </AssociationSet>
+    <AssociationSet Name="processo_id_contrario_fkey" Association="Self.processo_id_contrario_fkey">
+      <End Role="contrario" EntitySet="contrario" />
+      <End Role="processo" EntitySet="processo" />
+    </AssociationSet>
+    <AssociationSet Name="processo_id_usuario_fkey" Association="Self.processo_id_usuario_fkey">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="processo" EntitySet="processo" />
+    </AssociationSet>
+    <AssociationSet Name="usuario_id_socio_fkey" Association="Self.usuario_id_socio_fkey">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="usuario1" EntitySet="usuario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

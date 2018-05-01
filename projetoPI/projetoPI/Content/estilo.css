@@ -1,8 +1,7 @@
 ﻿body {
 }
 
-.corpo-do-site{
-    
+.corpo-do-site {
 }
 
 .cabecalho {
@@ -24,15 +23,29 @@
     margin: 5px;
 }
 
-a{
+a {
     margin: 5px;
-    color:azure;
+    color: azure;
 }
 
 ul {
     list-style-type: none;
 }
 
-.botao{
-    color:azure;
+.botao {
+    color: azure;
+}
+
+.usuario-logado {
+    color: black;
+}
+
+.card {
+    /*width: 18rem;*/
+    border: 1px solid #888;
+    margin: 5px;
+}
+
+a.links{
+    color: black;
 }

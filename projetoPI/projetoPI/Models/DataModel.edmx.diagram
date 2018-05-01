@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="528dd88fa708454dbd9cb7fe16f63575" Name="Diagram1">
+        <EntityTypeShape EntityType="projetoPI.Model.agendamento" Width="1.5" PointX="3" PointY="7.25" />
+        <EntityTypeShape EntityType="projetoPI.Model.cliente" Width="1.5" PointX="0.75" PointY="7.25" />
+        <EntityTypeShape EntityType="projetoPI.Model.contrario" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="projetoPI.Model.documento" Width="1.5" PointX="6" PointY="0.875" />
+        <EntityTypeShape EntityType="projetoPI.Model.etapa" Width="1.5" PointX="5.25" PointY="4" />
+        <EntityTypeShape EntityType="projetoPI.Model.parceiro" Width="1.5" PointX="8.25" PointY="4.25" />
+        <EntityTypeShape EntityType="projetoPI.Model.processo" Width="1.5" PointX="3" PointY="3.5" />
+        <EntityTypeShape EntityType="projetoPI.Model.usuario" Width="1.5" PointX="0.75" PointY="3.5" />
+        <AssociationConnector Association="projetoPI.Model.agendamento_id_usuario_fkey" />
+        <AssociationConnector Association="projetoPI.Model.processo_id_cliente_fkey" />
+        <AssociationConnector Association="projetoPI.Model.processo_id_contrario_fkey" />
+        <AssociationConnector Association="projetoPI.Model.etapa_id_processo_fkey" />
+        <AssociationConnector Association="projetoPI.Model.processo_id_usuario_fkey" />
+        <AssociationConnector Association="projetoPI.Model.usuario_id_socio_fkey" />
+        <AssociationConnector Association="projetoPI.Model.cliente_documento" />
+        <AssociationConnector Association="projetoPI.Model.contrario_documento" />
+        <AssociationConnector Association="projetoPI.Model.parceiro_documento" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

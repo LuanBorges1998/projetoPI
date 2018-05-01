@@ -1,0 +1,56 @@
+﻿@model IEnumerable<projetoPI.Models.agendamento>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Criar",null, new { @class = "links" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.horario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.data_agendamento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usuario.nome)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.horario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.data_agendamento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuario.nome)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.id }, new { @class = "links" }) |
+            @Html.ActionLink("Excluir", "Delete", new { id=item.id }, new { @class = "links" })
+        </td>
+    </tr>
+}
+
+</table>
