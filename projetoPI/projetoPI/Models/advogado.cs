@@ -12,24 +12,25 @@ namespace projetoPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class processo
+    public partial class advogado
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public processo()
+        public advogado()
         {
-            this.etapa = new HashSet<etapa>();
+            this.advogado1 = new HashSet<advogado>();
+            this.processo = new HashSet<processo>();
         }
     
         public int id { get; set; }
-        public string descricao { get; set; }
-        public int id_cliente { get; set; }
-        public int id_advogado { get; set; }
-        public int id_contrario { get; set; }
+        public string num_oab { get; set; }
+        public Nullable<int> id_usuario { get; set; }
+        public Nullable<int> id_socio { get; set; }
     
-        public virtual advogado advogado { get; set; }
-        public virtual cliente cliente { get; set; }
-        public virtual contrario contrario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<etapa> etapa { get; set; }
+        public virtual ICollection<advogado> advogado1 { get; set; }
+        public virtual advogado advogado2 { get; set; }
+        public virtual usuario usuario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<processo> processo { get; set; }
     }
 }

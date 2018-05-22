@@ -25,12 +25,14 @@ namespace projetoPI.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<advogado> advogado { get; set; }
         public virtual DbSet<agendamento> agendamento { get; set; }
         public virtual DbSet<cliente> cliente { get; set; }
         public virtual DbSet<contrario> contrario { get; set; }
         public virtual DbSet<documento> documento { get; set; }
         public virtual DbSet<etapa> etapa { get; set; }
         public virtual DbSet<parceiro> parceiro { get; set; }
+        public virtual DbSet<perfil> perfil { get; set; }
         public virtual DbSet<processo> processo { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }
     }

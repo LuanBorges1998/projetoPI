@@ -11,14 +11,19 @@ namespace projetoPI.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    public partial class etapa
+    
+    public partial class perfil
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public perfil()
+        {
+            this.usuario = new HashSet<usuario>();
+        }
+    
         public int id { get; set; }
-        public int id_processo { get; set; }
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:F2}")]
-        public Nullable<double> valor_pago { get; set; }    
-        public virtual processo processo { get; set; }
+        public string tipo { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<usuario> usuario { get; set; }
     }
 }

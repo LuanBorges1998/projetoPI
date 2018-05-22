@@ -47,7 +47,7 @@ namespace projetoPI.Repository
 
         public List<usuario> GetSocio()
         {
-            return DataModel.usuario.Where(x => x.tipo.Equals("SOCIO")).ToList();
+            return DataModel.usuario.Where(x => x.perfil.tipo.Equals("SOCIO")).ToList();
         }
 
         public void Excluir(int id)

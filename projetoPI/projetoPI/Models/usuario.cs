@@ -17,24 +17,20 @@ namespace projetoPI.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public usuario()
         {
+            this.advogado = new HashSet<advogado>();
             this.agendamento = new HashSet<agendamento>();
-            this.processo = new HashSet<processo>();
-            this.usuario1 = new HashSet<usuario>();
         }
     
         public int id { get; set; }
         public string nome { get; set; }
         public string login { get; set; }
         public string senha { get; set; }
-        public string tipo { get; set; }
-        public Nullable<int> id_socio { get; set; }
+        public int id_perfil { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<advogado> advogado { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<agendamento> agendamento { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<processo> processo { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<usuario> usuario1 { get; set; }
-        public virtual usuario usuario2 { get; set; }
+        public virtual perfil perfil { get; set; }
     }
 }

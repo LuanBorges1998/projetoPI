@@ -114,6 +114,11 @@
                             <input type="text" name="id" class="form-control" />
                         </div>*@
                         <div class="form-group">
+                            <label class="control-label col-md-2">OAB</label>
+                            <input type="text" name="num" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
                             <label class="control-label col-md-2">Id do sócio</label>
                             @*<select id="id_socio" class="form-control" name="id_socio"></select>*@
                             @Html.DropDownList("id_socio", null, htmlAttributes: new { @class = "form-control" })

@@ -32,11 +32,12 @@
             @Html.DisplayFor(modelItem => item.contrario.nome)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.usuario.nome)
+            @Html.DisplayFor(modelItem => item.advogado.usuario.nome)
         </td>
         <td>
             @Html.ActionLink("Editar", "Edit", new { id=item.id }, new { @class = "links" }) |
-            @Html.ActionLink("Excluir", "Delete", new { id=item.id }, new { @class = "links" })
+            @Html.ActionLink("Excluir", "Delete", new { id=item.id }, new { @class = "links" })|
+            @Html.ActionLink("Etapas", "List","Etapa", new { id = item.id }, new { @class = "links" })
         </td>
     </tr>
 }

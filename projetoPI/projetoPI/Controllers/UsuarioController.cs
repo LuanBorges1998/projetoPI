@@ -30,7 +30,7 @@ namespace projetoPI.Controllers
                 {
                     if (senha == us.senha)
                         Session["logado"] = us;
-                    switch (us.tipo)
+                    switch (us.perfil.tipo)
                     {
                         case "TI":
                             Response.Redirect("~/TI/Index");

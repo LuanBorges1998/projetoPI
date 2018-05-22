@@ -37,13 +37,18 @@
                     @item.senha
                 </td>
                 <td>
-                    @item.tipo
+                    @item.perfil.tipo
                 </td>
                 <td>
-                    @item.id_socio
+                    @if (item.perfil.tipo.Equals("COLABORADOR"))
+                    {
+                        projetoPI.Repository.AdvogadoRepository repo = new projetoPI.Repository.AdvogadoRepository();
+                        projetoPI.Models.advogado adv= repo.GetSocio(item.id);
+                        @adv.id
+                    }
                 </td>
                 <td>
-                    @Html.ActionLink("Editar", "Edit", new { id = item.id }, new { @class = "links" })|
+                    @Html.ActionLink("Editar", "Edit", new { id = item.id }, new { @class = "links" }) |
                     @Html.ActionLink("Excluir", "Excluir", new { id = item.id }, new { @class = "links" })
                 </td>
             </tr>

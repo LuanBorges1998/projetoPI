@@ -5,20 +5,24 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="528dd88fa708454dbd9cb7fe16f63575" Name="Diagram1">
-        <EntityTypeShape EntityType="projetoPI.Model.agendamento" Width="1.5" PointX="3" PointY="7.25" />
-        <EntityTypeShape EntityType="projetoPI.Model.cliente" Width="1.5" PointX="0.75" PointY="7.25" />
-        <EntityTypeShape EntityType="projetoPI.Model.contrario" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="projetoPI.Model.documento" Width="1.5" PointX="6" PointY="0.875" />
-        <EntityTypeShape EntityType="projetoPI.Model.etapa" Width="1.5" PointX="5.25" PointY="4" />
-        <EntityTypeShape EntityType="projetoPI.Model.parceiro" Width="1.5" PointX="8.25" PointY="4.25" />
-        <EntityTypeShape EntityType="projetoPI.Model.processo" Width="1.5" PointX="3" PointY="3.5" />
-        <EntityTypeShape EntityType="projetoPI.Model.usuario" Width="1.5" PointX="0.75" PointY="3.5" />
+        <EntityTypeShape EntityType="projetoPI.Model.advogado" Width="1.5" PointX="10.875" PointY="9.25" />
+        <EntityTypeShape EntityType="projetoPI.Model.agendamento" Width="1.5" PointX="3.75" PointY="10.375" />
+        <EntityTypeShape EntityType="projetoPI.Model.cliente" Width="1.5" PointX="7" PointY="4.875" />
+        <EntityTypeShape EntityType="projetoPI.Model.contrario" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="projetoPI.Model.documento" Width="1.5" PointX="5.875" PointY="2.375" />
+        <EntityTypeShape EntityType="projetoPI.Model.etapa" Width="1.5" PointX="8.625" PointY="7.875" />
+        <EntityTypeShape EntityType="projetoPI.Model.parceiro" Width="1.5" PointX="10.375" PointY="4.125" />
+        <EntityTypeShape EntityType="projetoPI.Model.perfil" Width="1.5" PointX="1.5" PointY="11.875" />
+        <EntityTypeShape EntityType="projetoPI.Model.processo" Width="1.5" PointX="4.75" PointY="6.5" />
+        <EntityTypeShape EntityType="projetoPI.Model.usuario" Width="1.5" PointX="1.5" PointY="8.375" />
+        <AssociationConnector Association="projetoPI.Model.advogado_id_socio_fkey" />
+        <AssociationConnector Association="projetoPI.Model.advogado_id_usuario_fkey" />
+        <AssociationConnector Association="projetoPI.Model.processo_id_advogado_fkey" />
         <AssociationConnector Association="projetoPI.Model.agendamento_id_usuario_fkey" />
         <AssociationConnector Association="projetoPI.Model.processo_id_cliente_fkey" />
         <AssociationConnector Association="projetoPI.Model.processo_id_contrario_fkey" />
         <AssociationConnector Association="projetoPI.Model.etapa_id_processo_fkey" />
-        <AssociationConnector Association="projetoPI.Model.processo_id_usuario_fkey" />
-        <AssociationConnector Association="projetoPI.Model.usuario_id_socio_fkey" />
+        <AssociationConnector Association="projetoPI.Model.usuario_id_perfil_fkey" />
         <AssociationConnector Association="projetoPI.Model.cliente_documento" />
         <AssociationConnector Association="projetoPI.Model.contrario_documento" />
         <AssociationConnector Association="projetoPI.Model.parceiro_documento" />

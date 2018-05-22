@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="projetoPIModelStoreContainer" CdmEntityContainer="DataModel">
+    <EntitySetMapping Name="advogado">
+      <EntityTypeMapping TypeName="projetoPI.Model.advogado">
+        <MappingFragment StoreEntitySet="advogado">
+          <ScalarProperty Name="id_socio" ColumnName="id_socio" />
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="num_oab" ColumnName="num_oab" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="agendamento">
       <EntityTypeMapping TypeName="projetoPI.Model.agendamento">
         <MappingFragment StoreEntitySet="agendamento">
@@ -55,11 +65,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="perfil">
+      <EntityTypeMapping TypeName="projetoPI.Model.perfil">
+        <MappingFragment StoreEntitySet="perfil">
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="processo">
       <EntityTypeMapping TypeName="projetoPI.Model.processo">
         <MappingFragment StoreEntitySet="processo">
           <ScalarProperty Name="id_contrario" ColumnName="id_contrario" />
-          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="id_advogado" ColumnName="id_advogado" />
           <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
           <ScalarProperty Name="descricao" ColumnName="descricao" />
           <ScalarProperty Name="id" ColumnName="id" />
@@ -69,8 +87,7 @@
     <EntitySetMapping Name="usuario">
       <EntityTypeMapping TypeName="projetoPI.Model.usuario">
         <MappingFragment StoreEntitySet="usuario">
-          <ScalarProperty Name="id_socio" ColumnName="id_socio" />
-          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="id_perfil" ColumnName="id_perfil" />
           <ScalarProperty Name="senha" ColumnName="senha" />
           <ScalarProperty Name="login" ColumnName="login" />
           <ScalarProperty Name="nome" ColumnName="nome" />

@@ -1,5 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="projetoPI.Model.Store" Provider="Npgsql" ProviderManifestToken="9.5.12" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="advogado">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="num_oab" Type="varchar" MaxLength="8000" />
+    <Property Name="id_usuario" Type="int4" />
+    <Property Name="id_socio" Type="int4" />
+  </EntityType>
   <EntityType Name="agendamento">
     <Key>
       <PropertyRef Name="id" />
@@ -72,6 +81,13 @@
     <Property Name="id_documento" Type="int4" Nullable="false" />
     <Property Name="id_parceiro" Type="int4" Nullable="false" />
   </EntityType>
+  <EntityType Name="perfil">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tipo" Type="varchar" MaxLength="8000" Nullable="false" />
+  </EntityType>
   <EntityType Name="processo">
     <Key>
       <PropertyRef Name="id" />
@@ -79,7 +95,7 @@
     <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="descricao" Type="varchar" MaxLength="8000" />
     <Property Name="id_cliente" Type="int4" Nullable="false" />
-    <Property Name="id_usuario" Type="int4" Nullable="false" />
+    <Property Name="id_advogado" Type="int4" Nullable="false" />
     <Property Name="id_contrario" Type="int4" Nullable="false" />
   </EntityType>
   <EntityType Name="usuario">
@@ -88,11 +104,34 @@
     </Key>
     <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="nome" Type="varchar" MaxLength="8000" />
-    <Property Name="login" Type="varchar" MaxLength="8000" />
-    <Property Name="senha" Type="varchar" MaxLength="8000" />
-    <Property Name="tipo" Type="varchar" MaxLength="8000" />
-    <Property Name="id_socio" Type="int4" />
+    <Property Name="login" Type="varchar" MaxLength="8000" Nullable="false" />
+    <Property Name="senha" Type="varchar" MaxLength="8000" Nullable="false" />
+    <Property Name="id_perfil" Type="int4" Nullable="false" />
   </EntityType>
+  <Association Name="advogado_id_socio_fkey">
+    <End Role="advogado" Type="Self.advogado" Multiplicity="0..1" />
+    <End Role="advogado1" Type="Self.advogado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="advogado">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="advogado1">
+        <PropertyRef Name="id_socio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="advogado_id_usuario_fkey">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+    <End Role="advogado" Type="Self.advogado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="advogado">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="agendamento_id_usuario_fkey">
     <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
     <End Role="agendamento" Type="Self.agendamento" Multiplicity="*" />
@@ -189,6 +228,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="processo_id_advogado_fkey">
+    <End Role="advogado" Type="Self.advogado" Multiplicity="1" />
+    <End Role="processo" Type="Self.processo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="advogado">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="processo">
+        <PropertyRef Name="id_advogado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="processo_id_cliente_fkey">
     <End Role="cliente" Type="Self.cliente" Multiplicity="1" />
     <End Role="processo" Type="Self.processo" Multiplicity="*" />
@@ -213,31 +264,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="processo_id_usuario_fkey">
-    <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
-    <End Role="processo" Type="Self.processo" Multiplicity="*" />
+  <Association Name="usuario_id_perfil_fkey">
+    <End Role="perfil" Type="Self.perfil" Multiplicity="1" />
+    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="usuario">
+      <Principal Role="perfil">
         <PropertyRef Name="id" />
       </Principal>
-      <Dependent Role="processo">
-        <PropertyRef Name="id_usuario" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="usuario_id_socio_fkey">
-    <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
-    <End Role="usuario1" Type="Self.usuario" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="usuario">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="usuario1">
-        <PropertyRef Name="id_socio" />
+      <Dependent Role="usuario">
+        <PropertyRef Name="id_perfil" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="projetoPIModelStoreContainer">
+    <EntitySet Name="advogado" EntityType="Self.advogado" Schema="public" store:Type="Tables" />
     <EntitySet Name="agendamento" EntityType="Self.agendamento" Schema="public" store:Type="Tables" />
     <EntitySet Name="cliente" EntityType="Self.cliente" Schema="public" store:Type="Tables" />
     <EntitySet Name="cliente_documento" EntityType="Self.cliente_documento" Schema="public" store:Type="Tables" />
@@ -247,8 +287,17 @@
     <EntitySet Name="etapa" EntityType="Self.etapa" Schema="public" store:Type="Tables" />
     <EntitySet Name="parceiro" EntityType="Self.parceiro" Schema="public" store:Type="Tables" />
     <EntitySet Name="parceiro_documento" EntityType="Self.parceiro_documento" Schema="public" store:Type="Tables" />
+    <EntitySet Name="perfil" EntityType="Self.perfil" Schema="public" store:Type="Tables" />
     <EntitySet Name="processo" EntityType="Self.processo" Schema="public" store:Type="Tables" />
     <EntitySet Name="usuario" EntityType="Self.usuario" Schema="public" store:Type="Tables" />
+    <AssociationSet Name="advogado_id_socio_fkey" Association="Self.advogado_id_socio_fkey">
+      <End Role="advogado" EntitySet="advogado" />
+      <End Role="advogado1" EntitySet="advogado" />
+    </AssociationSet>
+    <AssociationSet Name="advogado_id_usuario_fkey" Association="Self.advogado_id_usuario_fkey">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="advogado" EntitySet="advogado" />
+    </AssociationSet>
     <AssociationSet Name="agendamento_id_usuario_fkey" Association="Self.agendamento_id_usuario_fkey">
       <End Role="usuario" EntitySet="usuario" />
       <End Role="agendamento" EntitySet="agendamento" />
@@ -281,6 +330,10 @@
       <End Role="parceiro" EntitySet="parceiro" />
       <End Role="parceiro_documento" EntitySet="parceiro_documento" />
     </AssociationSet>
+    <AssociationSet Name="processo_id_advogado_fkey" Association="Self.processo_id_advogado_fkey">
+      <End Role="advogado" EntitySet="advogado" />
+      <End Role="processo" EntitySet="processo" />
+    </AssociationSet>
     <AssociationSet Name="processo_id_cliente_fkey" Association="Self.processo_id_cliente_fkey">
       <End Role="cliente" EntitySet="cliente" />
       <End Role="processo" EntitySet="processo" />
@@ -289,13 +342,9 @@
       <End Role="contrario" EntitySet="contrario" />
       <End Role="processo" EntitySet="processo" />
     </AssociationSet>
-    <AssociationSet Name="processo_id_usuario_fkey" Association="Self.processo_id_usuario_fkey">
+    <AssociationSet Name="usuario_id_perfil_fkey" Association="Self.usuario_id_perfil_fkey">
+      <End Role="perfil" EntitySet="perfil" />
       <End Role="usuario" EntitySet="usuario" />
-      <End Role="processo" EntitySet="processo" />
-    </AssociationSet>
-    <AssociationSet Name="usuario_id_socio_fkey" Association="Self.usuario_id_socio_fkey">
-      <End Role="usuario" EntitySet="usuario" />
-      <End Role="usuario1" EntitySet="usuario" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

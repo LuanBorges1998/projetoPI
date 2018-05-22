@@ -9,7 +9,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>usuario</h4>
         <hr />
@@ -40,21 +40,47 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.tipo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.tipo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.tipo, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.perfil.tipo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.perfil.tipo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.perfil.tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
-            @Html.LabelFor(model => model.id_socio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.id_socio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.id_socio, "", new { @class = "text-danger" })
-            </div>
+            <label class="control-label col-md-2">Tipo</label>
+            @Html.DropDownList("tipos", null, htmlAttributes: new { @class = "form-control" })
         </div>
+
+        @*@if (Model.id_perfil == 2 || Model.id_perfil == 3)
+            {*@
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.id_socio, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.id_socio, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.id_socio, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        @*//}
+            //@*else
+            //{*@
+        @if (Model.id_perfil == 2 || Model.id_perfil == 3)
+         {
+                    projetoPI.Repository.AdvogadoRepository repo = new projetoPI.Repository.AdvogadoRepository();
+                    var adv = repo.GetByIdUsuario(Model.id);
+            <div class="form-group">
+                <label class="control-label col-md-2">OAB</label>
+                <input type="text" name="num" class="form-control" value="@adv.num_oab" />
+            </div>
+          }
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Id do sócio</label>
+            @*<select id="id_socio" class="form-control" name="id_socio"></select>*@
+            @Html.DropDownList("id_socio", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+        @*//}*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

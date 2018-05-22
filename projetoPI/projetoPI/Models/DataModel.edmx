@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="projetoPI.Model.Store" Provider="Npgsql" ProviderManifestToken="9.5.12" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="advogado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="num_oab" Type="varchar" MaxLength="8000" />
+          <Property Name="id_usuario" Type="int4" />
+          <Property Name="id_socio" Type="int4" />
+        </EntityType>
         <EntityType Name="agendamento">
           <Key>
             <PropertyRef Name="id" />
@@ -77,6 +86,13 @@
           <Property Name="id_documento" Type="int4" Nullable="false" />
           <Property Name="id_parceiro" Type="int4" Nullable="false" />
         </EntityType>
+        <EntityType Name="perfil">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipo" Type="varchar" MaxLength="8000" Nullable="false" />
+        </EntityType>
         <EntityType Name="processo">
           <Key>
             <PropertyRef Name="id" />
@@ -84,7 +100,7 @@
           <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="descricao" Type="varchar" MaxLength="8000" />
           <Property Name="id_cliente" Type="int4" Nullable="false" />
-          <Property Name="id_usuario" Type="int4" Nullable="false" />
+          <Property Name="id_advogado" Type="int4" Nullable="false" />
           <Property Name="id_contrario" Type="int4" Nullable="false" />
         </EntityType>
         <EntityType Name="usuario">
@@ -93,11 +109,34 @@
           </Key>
           <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nome" Type="varchar" MaxLength="8000" />
-          <Property Name="login" Type="varchar" MaxLength="8000" />
-          <Property Name="senha" Type="varchar" MaxLength="8000" />
-          <Property Name="tipo" Type="varchar" MaxLength="8000" />
-          <Property Name="id_socio" Type="int4" />
+          <Property Name="login" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="senha" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="id_perfil" Type="int4" Nullable="false" />
         </EntityType>
+        <Association Name="advogado_id_socio_fkey">
+          <End Role="advogado" Type="Self.advogado" Multiplicity="0..1" />
+          <End Role="advogado1" Type="Self.advogado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="advogado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="advogado1">
+              <PropertyRef Name="id_socio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="advogado_id_usuario_fkey">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="advogado" Type="Self.advogado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="advogado">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="agendamento_id_usuario_fkey">
           <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
           <End Role="agendamento" Type="Self.agendamento" Multiplicity="*" />
@@ -194,6 +233,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="processo_id_advogado_fkey">
+          <End Role="advogado" Type="Self.advogado" Multiplicity="1" />
+          <End Role="processo" Type="Self.processo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="advogado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="processo">
+              <PropertyRef Name="id_advogado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="processo_id_cliente_fkey">
           <End Role="cliente" Type="Self.cliente" Multiplicity="1" />
           <End Role="processo" Type="Self.processo" Multiplicity="*" />
@@ -218,31 +269,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="processo_id_usuario_fkey">
-          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
-          <End Role="processo" Type="Self.processo" Multiplicity="*" />
+        <Association Name="usuario_id_perfil_fkey">
+          <End Role="perfil" Type="Self.perfil" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="usuario">
+            <Principal Role="perfil">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="processo">
-              <PropertyRef Name="id_usuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="usuario_id_socio_fkey">
-          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
-          <End Role="usuario1" Type="Self.usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="usuario">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="usuario1">
-              <PropertyRef Name="id_socio" />
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_perfil" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="projetoPIModelStoreContainer">
+          <EntitySet Name="advogado" EntityType="Self.advogado" Schema="public" store:Type="Tables" />
           <EntitySet Name="agendamento" EntityType="Self.agendamento" Schema="public" store:Type="Tables" />
           <EntitySet Name="cliente" EntityType="Self.cliente" Schema="public" store:Type="Tables" />
           <EntitySet Name="cliente_documento" EntityType="Self.cliente_documento" Schema="public" store:Type="Tables" />
@@ -252,8 +292,17 @@
           <EntitySet Name="etapa" EntityType="Self.etapa" Schema="public" store:Type="Tables" />
           <EntitySet Name="parceiro" EntityType="Self.parceiro" Schema="public" store:Type="Tables" />
           <EntitySet Name="parceiro_documento" EntityType="Self.parceiro_documento" Schema="public" store:Type="Tables" />
+          <EntitySet Name="perfil" EntityType="Self.perfil" Schema="public" store:Type="Tables" />
           <EntitySet Name="processo" EntityType="Self.processo" Schema="public" store:Type="Tables" />
           <EntitySet Name="usuario" EntityType="Self.usuario" Schema="public" store:Type="Tables" />
+          <AssociationSet Name="advogado_id_socio_fkey" Association="Self.advogado_id_socio_fkey">
+            <End Role="advogado" EntitySet="advogado" />
+            <End Role="advogado1" EntitySet="advogado" />
+          </AssociationSet>
+          <AssociationSet Name="advogado_id_usuario_fkey" Association="Self.advogado_id_usuario_fkey">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="advogado" EntitySet="advogado" />
+          </AssociationSet>
           <AssociationSet Name="agendamento_id_usuario_fkey" Association="Self.agendamento_id_usuario_fkey">
             <End Role="usuario" EntitySet="usuario" />
             <End Role="agendamento" EntitySet="agendamento" />
@@ -286,6 +335,10 @@
             <End Role="parceiro" EntitySet="parceiro" />
             <End Role="parceiro_documento" EntitySet="parceiro_documento" />
           </AssociationSet>
+          <AssociationSet Name="processo_id_advogado_fkey" Association="Self.processo_id_advogado_fkey">
+            <End Role="advogado" EntitySet="advogado" />
+            <End Role="processo" EntitySet="processo" />
+          </AssociationSet>
           <AssociationSet Name="processo_id_cliente_fkey" Association="Self.processo_id_cliente_fkey">
             <End Role="cliente" EntitySet="cliente" />
             <End Role="processo" EntitySet="processo" />
@@ -294,13 +347,9 @@
             <End Role="contrario" EntitySet="contrario" />
             <End Role="processo" EntitySet="processo" />
           </AssociationSet>
-          <AssociationSet Name="processo_id_usuario_fkey" Association="Self.processo_id_usuario_fkey">
+          <AssociationSet Name="usuario_id_perfil_fkey" Association="Self.usuario_id_perfil_fkey">
+            <End Role="perfil" EntitySet="perfil" />
             <End Role="usuario" EntitySet="usuario" />
-            <End Role="processo" EntitySet="processo" />
-          </AssociationSet>
-          <AssociationSet Name="usuario_id_socio_fkey" Association="Self.usuario_id_socio_fkey">
-            <End Role="usuario" EntitySet="usuario" />
-            <End Role="usuario1" EntitySet="usuario" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -308,14 +357,28 @@
     <edmx:ConceptualModels>
       <Schema Namespace="projetoPI.Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="DataModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="advogado" EntityType="projetoPI.Model.advogado" />
           <EntitySet Name="agendamento" EntityType="projetoPI.Model.agendamento" />
           <EntitySet Name="cliente" EntityType="projetoPI.Model.cliente" />
           <EntitySet Name="contrario" EntityType="projetoPI.Model.contrario" />
           <EntitySet Name="documento" EntityType="projetoPI.Model.documento" />
           <EntitySet Name="etapa" EntityType="projetoPI.Model.etapa" />
           <EntitySet Name="parceiro" EntityType="projetoPI.Model.parceiro" />
+          <EntitySet Name="perfil" EntityType="projetoPI.Model.perfil" />
           <EntitySet Name="processo" EntityType="projetoPI.Model.processo" />
           <EntitySet Name="usuario" EntityType="projetoPI.Model.usuario" />
+          <AssociationSet Name="advogado_id_socio_fkey" Association="projetoPI.Model.advogado_id_socio_fkey">
+            <End Role="advogado" EntitySet="advogado" />
+            <End Role="advogado1" EntitySet="advogado" />
+          </AssociationSet>
+          <AssociationSet Name="advogado_id_usuario_fkey" Association="projetoPI.Model.advogado_id_usuario_fkey">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="advogado" EntitySet="advogado" />
+          </AssociationSet>
+          <AssociationSet Name="processo_id_advogado_fkey" Association="projetoPI.Model.processo_id_advogado_fkey">
+            <End Role="advogado" EntitySet="advogado" />
+            <End Role="processo" EntitySet="processo" />
+          </AssociationSet>
           <AssociationSet Name="agendamento_id_usuario_fkey" Association="projetoPI.Model.agendamento_id_usuario_fkey">
             <End Role="usuario" EntitySet="usuario" />
             <End Role="agendamento" EntitySet="agendamento" />
@@ -332,13 +395,9 @@
             <End Role="processo" EntitySet="processo" />
             <End Role="etapa" EntitySet="etapa" />
           </AssociationSet>
-          <AssociationSet Name="processo_id_usuario_fkey" Association="projetoPI.Model.processo_id_usuario_fkey">
+          <AssociationSet Name="usuario_id_perfil_fkey" Association="projetoPI.Model.usuario_id_perfil_fkey">
+            <End Role="perfil" EntitySet="perfil" />
             <End Role="usuario" EntitySet="usuario" />
-            <End Role="processo" EntitySet="processo" />
-          </AssociationSet>
-          <AssociationSet Name="usuario_id_socio_fkey" Association="projetoPI.Model.usuario_id_socio_fkey">
-            <End Role="usuario" EntitySet="usuario" />
-            <End Role="usuario1" EntitySet="usuario" />
           </AssociationSet>
           <AssociationSet Name="cliente_documento" Association="projetoPI.Model.cliente_documento">
             <End Role="cliente" EntitySet="cliente" />
@@ -353,6 +412,19 @@
             <End Role="parceiro" EntitySet="parceiro" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="advogado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="num_oab" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+          <Property Name="id_usuario" Type="Int32" />
+          <Property Name="id_socio" Type="Int32" />
+          <NavigationProperty Name="advogado1" Relationship="projetoPI.Model.advogado_id_socio_fkey" FromRole="advogado" ToRole="advogado1" />
+          <NavigationProperty Name="advogado2" Relationship="projetoPI.Model.advogado_id_socio_fkey" FromRole="advogado1" ToRole="advogado" />
+          <NavigationProperty Name="usuario" Relationship="projetoPI.Model.advogado_id_usuario_fkey" FromRole="advogado" ToRole="usuario" />
+          <NavigationProperty Name="processo" Relationship="projetoPI.Model.processo_id_advogado_fkey" FromRole="advogado" ToRole="processo" />
+        </EntityType>
         <EntityType Name="agendamento">
           <Key>
             <PropertyRef Name="id" />
@@ -411,6 +483,14 @@
           <Property Name="nome" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="documento" Relationship="projetoPI.Model.parceiro_documento" FromRole="parceiro" ToRole="documento" />
         </EntityType>
+        <EntityType Name="perfil">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipo" Type="String" Nullable="false" MaxLength="8000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="usuario" Relationship="projetoPI.Model.usuario_id_perfil_fkey" FromRole="perfil" ToRole="usuario" />
+        </EntityType>
         <EntityType Name="processo">
           <Key>
             <PropertyRef Name="id" />
@@ -418,12 +498,12 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="descricao" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
           <Property Name="id_cliente" Type="Int32" Nullable="false" />
-          <Property Name="id_usuario" Type="Int32" Nullable="false" />
+          <Property Name="id_advogado" Type="Int32" Nullable="false" />
           <Property Name="id_contrario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="advogado" Relationship="projetoPI.Model.processo_id_advogado_fkey" FromRole="processo" ToRole="advogado" />
           <NavigationProperty Name="cliente" Relationship="projetoPI.Model.processo_id_cliente_fkey" FromRole="processo" ToRole="cliente" />
           <NavigationProperty Name="contrario" Relationship="projetoPI.Model.processo_id_contrario_fkey" FromRole="processo" ToRole="contrario" />
           <NavigationProperty Name="etapa" Relationship="projetoPI.Model.etapa_id_processo_fkey" FromRole="processo" ToRole="etapa" />
-          <NavigationProperty Name="usuario" Relationship="projetoPI.Model.processo_id_usuario_fkey" FromRole="processo" ToRole="usuario" />
         </EntityType>
         <EntityType Name="usuario">
           <Key>
@@ -431,15 +511,49 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nome" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
-          <Property Name="login" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
-          <Property Name="senha" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
-          <Property Name="tipo" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
-          <Property Name="id_socio" Type="Int32" />
+          <Property Name="login" Type="String" Nullable="false" MaxLength="8000" FixedLength="false" Unicode="true" />
+          <Property Name="senha" Type="String" Nullable="false" MaxLength="8000" FixedLength="false" Unicode="true" />
+          <Property Name="id_perfil" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="advogado" Relationship="projetoPI.Model.advogado_id_usuario_fkey" FromRole="usuario" ToRole="advogado" />
           <NavigationProperty Name="agendamento" Relationship="projetoPI.Model.agendamento_id_usuario_fkey" FromRole="usuario" ToRole="agendamento" />
-          <NavigationProperty Name="processo" Relationship="projetoPI.Model.processo_id_usuario_fkey" FromRole="usuario" ToRole="processo" />
-          <NavigationProperty Name="usuario1" Relationship="projetoPI.Model.usuario_id_socio_fkey" FromRole="usuario" ToRole="usuario1" />
-          <NavigationProperty Name="usuario2" Relationship="projetoPI.Model.usuario_id_socio_fkey" FromRole="usuario1" ToRole="usuario" />
+          <NavigationProperty Name="perfil" Relationship="projetoPI.Model.usuario_id_perfil_fkey" FromRole="usuario" ToRole="perfil" />
         </EntityType>
+        <Association Name="advogado_id_socio_fkey">
+          <End Type="projetoPI.Model.advogado" Role="advogado" Multiplicity="0..1" />
+          <End Type="projetoPI.Model.advogado" Role="advogado1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="advogado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="advogado1">
+              <PropertyRef Name="id_socio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="advogado_id_usuario_fkey">
+          <End Type="projetoPI.Model.usuario" Role="usuario" Multiplicity="0..1" />
+          <End Type="projetoPI.Model.advogado" Role="advogado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="advogado">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="processo_id_advogado_fkey">
+          <End Type="projetoPI.Model.advogado" Role="advogado" Multiplicity="1" />
+          <End Type="projetoPI.Model.processo" Role="processo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="advogado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="processo">
+              <PropertyRef Name="id_advogado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="agendamento_id_usuario_fkey">
           <End Type="projetoPI.Model.usuario" Role="usuario" Multiplicity="1" />
           <End Type="projetoPI.Model.agendamento" Role="agendamento" Multiplicity="*" />
@@ -488,27 +602,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="processo_id_usuario_fkey">
-          <End Type="projetoPI.Model.usuario" Role="usuario" Multiplicity="1" />
-          <End Type="projetoPI.Model.processo" Role="processo" Multiplicity="*" />
+        <Association Name="usuario_id_perfil_fkey">
+          <End Type="projetoPI.Model.perfil" Role="perfil" Multiplicity="1" />
+          <End Type="projetoPI.Model.usuario" Role="usuario" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="usuario">
+            <Principal Role="perfil">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="processo">
-              <PropertyRef Name="id_usuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="usuario_id_socio_fkey">
-          <End Type="projetoPI.Model.usuario" Role="usuario" Multiplicity="0..1" />
-          <End Type="projetoPI.Model.usuario" Role="usuario1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="usuario">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="usuario1">
-              <PropertyRef Name="id_socio" />
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_perfil" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -524,12 +626,22 @@
           <End Type="projetoPI.Model.documento" Role="documento" Multiplicity="*" />
           <End Type="projetoPI.Model.parceiro" Role="parceiro" Multiplicity="*" />
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="projetoPIModelStoreContainer" CdmEntityContainer="DataModel">
+          <EntitySetMapping Name="advogado">
+            <EntityTypeMapping TypeName="projetoPI.Model.advogado">
+              <MappingFragment StoreEntitySet="advogado">
+                <ScalarProperty Name="id_socio" ColumnName="id_socio" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="num_oab" ColumnName="num_oab" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="agendamento">
             <EntityTypeMapping TypeName="projetoPI.Model.agendamento">
               <MappingFragment StoreEntitySet="agendamento">
@@ -584,11 +696,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="perfil">
+            <EntityTypeMapping TypeName="projetoPI.Model.perfil">
+              <MappingFragment StoreEntitySet="perfil">
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="processo">
             <EntityTypeMapping TypeName="projetoPI.Model.processo">
               <MappingFragment StoreEntitySet="processo">
                 <ScalarProperty Name="id_contrario" ColumnName="id_contrario" />
-                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="id_advogado" ColumnName="id_advogado" />
                 <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
                 <ScalarProperty Name="descricao" ColumnName="descricao" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -598,8 +718,7 @@
           <EntitySetMapping Name="usuario">
             <EntityTypeMapping TypeName="projetoPI.Model.usuario">
               <MappingFragment StoreEntitySet="usuario">
-                <ScalarProperty Name="id_socio" ColumnName="id_socio" />
-                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="id_perfil" ColumnName="id_perfil" />
                 <ScalarProperty Name="senha" ColumnName="senha" />
                 <ScalarProperty Name="login" ColumnName="login" />
                 <ScalarProperty Name="nome" ColumnName="nome" />

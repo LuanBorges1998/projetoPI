@@ -10,6 +10,7 @@ namespace projetoPI.Controllers
 {
     public class SocioColaboradorController : Controller
     {
+        AdvogadoRepository advogadoRepository = new AdvogadoRepository();
         ProcessoRepository processoRepository = new ProcessoRepository();
         ClienteRepository clienteRepository = new ClienteRepository();
         ContrarioRepository contrarioRepository = new ContrarioRepository();
@@ -51,12 +52,13 @@ namespace projetoPI.Controllers
             }
             ViewData["id_contrario"] = items2;
 
+            var adv = advogadoRepository.GetByIdUsuario(((usuario)Session["logado"]).id);
             SelectListItem[] items3 = new SelectListItem[]
                 {
-                    new SelectListItem {Text = ((usuario)Session["logado"]).nome, Value = ((usuario)Session["logado"]).id.ToString()}
+                    new SelectListItem {Text = adv.usuario.nome, Value = adv.id.ToString()}
                 };
 
-            ViewData["id_usuario"] = items3;
+            ViewData["id_advogado"] = items3;
 
             return View();
         }
@@ -66,7 +68,7 @@ namespace projetoPI.Controllers
         {
             processoRepository.Salvar(processo);
             usuario logado = (usuario)Session["logado"];
-            if (logado.tipo.Equals("COLABORADOR"))
+            if (logado.perfil.tipo.Equals("COLABORADOR"))
                 return RedirectToAction("Index", "COLABORADOR");
             else
                 return RedirectToAction("Index", "SOCIO");
@@ -93,7 +95,7 @@ namespace projetoPI.Controllers
 
             foreach (cliente client in clientes)
             {
-                if (pro.cliente == client)
+                if (pro.cliente.id == client.id)
                     continue;
                 items[ct] = new SelectListItem { Text = client.nome, Value = client.id.ToString() };
                 ct++;
@@ -102,13 +104,7 @@ namespace projetoPI.Controllers
             items[ct] = new SelectListItem { Text = "", Value = "" };
             ViewData["id_cliente"] = items;
 
-
-
-
-
-
             List<contrario> contrarios = contrarioRepository.GetAll();
-
 
             SelectListItem[] items2;
 
@@ -127,7 +123,7 @@ namespace projetoPI.Controllers
 
             foreach (contrario  contrario in contrarios)
             {
-                if (pro.contrario == contrario)
+                if (pro.contrario.id == contrario.id)
                     continue;
                 items2[ct2] = new SelectListItem { Text = contrario.nome, Value = contrario.id.ToString() };
                 ct2++;
@@ -137,17 +133,13 @@ namespace projetoPI.Controllers
 
             ViewData["id_contrario"] = items2;
 
-
-
-
-
-
+            var adv = advogadoRepository.GetByIdUsuario(((usuario)Session["logado"]).id);
             SelectListItem[] items3 = new SelectListItem[]
                 {
-                    new SelectListItem {Text = ((usuario)Session["logado"]).nome, Value = ((usuario)Session["logado"]).id.ToString()}
+                    new SelectListItem {Text = adv.usuario.nome, Value = adv.id.ToString()}
                 };
 
-            ViewData["id_usuario"] = items3;
+            ViewData["id_advogado"] = items3;
             return View(pro);
         }
 
@@ -156,7 +148,7 @@ namespace projetoPI.Controllers
         {
             processoRepository.Salvar(processo);
             usuario logado = (usuario)Session["logado"];
-            if (logado.tipo.Equals("COLABORADOR"))
+            if (logado.perfil.tipo.Equals("COLABORADOR"))
                 return RedirectToAction("Index", "COLABORADOR");
             else
                 return RedirectToAction("Index", "SOCIO");
@@ -166,7 +158,7 @@ namespace projetoPI.Controllers
         {
             processoRepository.Excluir(id);
             usuario logado = (usuario)Session["logado"];
-            if (logado.tipo.Equals("COLABORADOR"))
+            if (logado.perfil.tipo.Equals("COLABORADOR"))
                 return RedirectToAction("Index", "COLABORADOR");
             else
                 return RedirectToAction("Index", "SOCIO");
@@ -182,7 +174,7 @@ namespace projetoPI.Controllers
         {
             clienteRepository.Salvar(cliente);
             usuario logado = (usuario)Session["logado"];
-            if (logado.tipo.Equals("COLABORADOR"))
+            if (logado.perfil.tipo.Equals("COLABORADOR"))
                 return RedirectToAction("Index", "COLABORADOR");
             else
                 return RedirectToAction("Index", "SOCIO");
@@ -198,7 +190,7 @@ namespace projetoPI.Controllers
         {
             clienteRepository.Salvar(cliente);
             usuario logado = (usuario)Session["logado"];
-            if (logado.tipo.Equals("COLABORADOR"))
+            if (logado.perfil.tipo.Equals("COLABORADOR"))
                 return RedirectToAction("Index", "COLABORADOR");
             else
                 return RedirectToAction("Index", "SOCIO");
@@ -214,7 +206,7 @@ namespace projetoPI.Controllers
         {
             contrarioRepository.Salvar(contrario);
             usuario logado = (usuario)Session["logado"];
-            if (logado.tipo.Equals("COLABORADOR"))
+            if (logado.perfil.tipo.Equals("COLABORADOR"))
                 return RedirectToAction("Index", "COLABORADOR");
             else
                 return RedirectToAction("Index", "SOCIO");
@@ -231,10 +223,11 @@ namespace projetoPI.Controllers
         {
             contrarioRepository.Salvar(contrario);
             usuario logado = (usuario)Session["logado"];
-            if (logado.tipo.Equals("COLABORADOR"))
+            if (logado.perfil.tipo.Equals("COLABORADOR"))
                 return RedirectToAction("Index", "COLABORADOR");
             else
                 return RedirectToAction("Index", "SOCIO");
         }
+
     }
 }

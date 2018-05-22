@@ -1,0 +1,39 @@
+﻿@model IEnumerable<projetoPI.Models.etapa>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", new { id_processo = ViewBag.Id_Processo }, new { @class = "links" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.valor_pago)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.processo.descricao)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.valor_pago)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.processo.descricao)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }, new { @class = "links" }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }, new { @class = "links" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id }, new { @class = "links" })
+        </td>
+    </tr>
+}
+
+</table>
