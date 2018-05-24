@@ -3,6 +3,7 @@
     ViewBag.Title = "Index";
     List<projetoPI.Models.cliente> cli = new List<projetoPI.Models.cliente>();
     List<projetoPI.Models.contrario> con = new List<projetoPI.Models.contrario>();
+    List<projetoPI.Models.parceiro> par = new List<projetoPI.Models.parceiro>();
 }
 
 <h2>Página Colaborador</h2>
@@ -10,7 +11,7 @@
 @Html.Partial("_ProcessosColaborador", Model)
 
 
-@if (ViewBag.Cli!=null)
+@if (ViewBag.Cli != null)
 {
     cli = ViewBag.Cli;
 }
@@ -22,3 +23,9 @@
     con = ViewBag.Con;
 }
 @Html.Partial("_Contrario", con)
+
+@if (ViewBag.Par != null)
+{
+    par = ViewBag.Par;
+}
+@Html.Partial("_Parceiro", par)

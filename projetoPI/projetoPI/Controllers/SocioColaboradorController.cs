@@ -14,6 +14,7 @@ namespace projetoPI.Controllers
         ProcessoRepository processoRepository = new ProcessoRepository();
         ClienteRepository clienteRepository = new ClienteRepository();
         ContrarioRepository contrarioRepository = new ContrarioRepository();
+        ParceiroRepository parceiroRepository = new ParceiroRepository();
         // GET: SocioColaborador
         //public ActionResult Index()
         //{
@@ -229,5 +230,37 @@ namespace projetoPI.Controllers
                 return RedirectToAction("Index", "SOCIO");
         }
 
+        public ActionResult AdicionaParceiro()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AdicionaParceiro(parceiro parceiro)
+        {
+            parceiroRepository.Salvar(parceiro);
+            usuario logado = (usuario)Session["logado"];
+            if (logado.perfil.tipo.Equals("COLABORADOR"))
+                return RedirectToAction("Index", "COLABORADOR");
+            else
+                return RedirectToAction("Index", "SOCIO");
+        }
+
+        public ActionResult EditParceiro(int id)
+        {
+            parceiro par = parceiroRepository.GetById(id);
+            return View(par);
+        }
+
+        [HttpPost]
+        public ActionResult EditParceiro(parceiro parceiro)
+        {
+            parceiroRepository.Salvar(parceiro);
+            usuario logado = (usuario)Session["logado"];
+            if (logado.perfil.tipo.Equals("COLABORADOR"))
+                return RedirectToAction("Index", "COLABORADOR");
+            else
+                return RedirectToAction("Index", "SOCIO");
+        }
     }
 }

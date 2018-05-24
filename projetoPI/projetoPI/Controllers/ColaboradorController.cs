@@ -13,14 +13,17 @@ namespace projetoPI.Controllers
         ProcessoRepository processoRepository = new ProcessoRepository();
         ClienteRepository clienteRepository = new ClienteRepository();
         ContrarioRepository contrarioRepository = new ContrarioRepository();
+        ParceiroRepository parceiroRepository = new ParceiroRepository();
         // GET: Colaborador
         public ActionResult Index()
         {
             var q = processoRepository.GetAll();
             var y = clienteRepository.GetAll();
             var z = contrarioRepository.GetAll();
+            var w = parceiroRepository.GetAll();
             ViewBag.Cli = y;
             ViewBag.Con = z;
+            ViewBag.Par = w;
             return View(q);
         }
 
@@ -119,5 +122,15 @@ namespace projetoPI.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult EditParceiro(int id)
+        {
+            return RedirectToAction("EditParceiro", "SocioColaborador", new { id = id });
+        }
+
+        public ActionResult DeleteParceiro(int id)
+        {
+            parceiroRepository.Excluir(id);
+            return RedirectToAction("Index");
+        }
     }
 }
