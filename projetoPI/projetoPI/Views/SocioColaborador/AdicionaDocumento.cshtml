@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "AdicionaDocumento";
+}
+
+<h2>AdicionaDocumento</h2>
+
+
+@using (Html.BeginForm("AdicionaDocumento", "SocioColaborador", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Documento</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Cliente</label>
+            @Html.DropDownList("cliente", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Contrário</label>
+            @Html.DropDownList("contrario", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Parceiro</label>
+            @Html.DropDownList("parceiro", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="MeuArquivo" type="file" name="MeuArquivo" runat="server">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
